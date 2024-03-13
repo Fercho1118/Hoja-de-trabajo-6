@@ -1,8 +1,18 @@
 package uvg.edu.gt;
 
 import java.util.Scanner;
-
+/**
+ * Clase App
+ * Felipe Aguilar - 23195
+ * Fernando Rueda - 23748
+ * Clase principal que inicia la aplicación. 
+ * Permite al usuario elegir el tipo de Mapa a utilizar y ejecutar diferentes operaciones sobre una colección de cartas.
+ */
 public class App {
+    /**
+     * Método principal que se ejecuta al iniciar la aplicación.
+     * @param args Argumentos de línea de comando.
+     */
     public static void main( String[] args ){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Seleccione el tipo de Map que desea utilizar:");
@@ -13,7 +23,8 @@ public class App {
         int option = scanner.nextInt();
         
         MapFactory factory;
-        
+
+        // Selección del tipo de Mapa según la opción del usuario        
         switch(option) {
             case 1:
                 factory = new HashMapFactory();
@@ -31,10 +42,13 @@ public class App {
 
         CardManager manager = new CardManager(factory);
         
+        // Carga de cartas y ejecución del menú de opciones        
         try {
-            manager.loadCards("cards_desc.txt"); // Carga las cartas disponibles
-            scanner.nextLine(); // Asegúrate de consumir el salto de línea restante.
+            manager.loadCards("hdt6\\target\\classes\\cards_desc.txt");
+
+            scanner.nextLine(); 
             
+            // Menú de opciones para interactuar con la colección de cartas            
             while (true) {
                 System.out.println("\nMenú de Opciones:");
                 System.out.println("1. Agregar una carta a la colección del usuario.");
@@ -46,7 +60,7 @@ public class App {
                 System.out.println("7. Salir.");
                 System.out.print("Seleccione una opción: ");
                 option = scanner.nextInt();
-                scanner.nextLine(); // Consumir la nueva línea después de leer un número
+                scanner.nextLine(); 
                 
                 switch (option) {
                     case 1:
