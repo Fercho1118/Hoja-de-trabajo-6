@@ -1,6 +1,4 @@
 package uvg.edu.gt;
-import java.util.HashMap;
-import java.util.Map;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -45,22 +43,52 @@ public class CardManager {
     }
 
     public void showUserCollection() {
-        userCollection.forEach((card, count) -> System.out.println("Carta: " + card + " - Tipo: " + availableCards.get(card) + " - Cantidad: " + count));
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(userCollection.entrySet());
+        
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                String type1 = availableCards.get(o1.getKey());
+                String type2 = availableCards.get(o2.getKey());
+                return type1.compareTo(type2);
+            }
+        });
+        
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println("Carta: " + entry.getKey() + " - Tipo: " + availableCards.get(entry.getKey()) + " - Cantidad: " + entry.getValue());
+        }
     }
 
     public void showUserCollectionSortedByType() {
-        userCollection.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue(Comparator.comparing(availableCards::get)))
-                .forEach(entry -> System.out.println("Carta: " + entry.getKey() + " - Tipo: " + availableCards.get(entry.getKey()) + " - Cantidad: " + entry.getValue()));
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(userCollection.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1, Map.Entry<String, Integer> o2) {
+                String type1 = availableCards.get(o1.getKey());
+                String type2 = availableCards.get(o2.getKey());
+                return type1.compareTo(type2);
+            }
+        });
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println("Carta: " + entry.getKey() + " - Tipo: " + availableCards.get(entry.getKey()) + " - Cantidad: " + entry.getValue());
+        }
     }
 
     public void showAllAvailableCards() {
-        availableCards.forEach((name, type) -> System.out.println("Carta: " + name + " - Tipo: " + type));
+        for (Map.Entry<String, String> entry : availableCards.entrySet()) {
+            System.out.println("Carta: " + entry.getKey() + " - Tipo: " + entry.getValue());
+        }
     }
 
     public void showAllAvailableCardsSortedByType() {
-        availableCards.entrySet().stream()
-                .sorted(Map.Entry.comparingByValue())
-                .forEach(entry -> System.out.println("Carta: " + entry.getKey() + " - Tipo: " + entry.getValue()));
-    }
+        List<Map.Entry<String, String>> list = new LinkedList<>(availableCards.entrySet());
+        Collections.sort(list, new Comparator<Map.Entry<String, String>>() {
+            @Override
+            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+                return o1.getValue().compareTo(o2.getValue());
+            }
+        });
+        for (Map.Entry<String, String> entry : list) {
+            System.out.println("Carta: " + entry.getKey() + " - Tipo: " + entry.getValue());
+        }
+    }
 }
